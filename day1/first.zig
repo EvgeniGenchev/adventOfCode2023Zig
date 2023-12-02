@@ -2,8 +2,6 @@ const std = @import("std");
 const print = std.debug.print;
 const fs = std.fs;
 const reverse = std.mem.reverse;
-const isEqual = std.mem.eql;
-const Array = std.ArrayList;
 
 const digit_mapping = [_][]const u8{
     "zero",
