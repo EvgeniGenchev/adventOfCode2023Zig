@@ -37,21 +37,17 @@ pub fn isPossibleGame(line: []u8) u8 {
 
     while (it.next()) |token| {
         var jt = std.mem.tokenizeAny(u8, token, " ,");
-        // std.debug.print("\t-|{s}\n", .{token});
         while (jt.next()) |v| {
             if (jt.next()) |k| {
-                // std.debug.print("-|{s}:{d}\n", .{ k, int(v) catch 99 });
                 for (colors, maxes) |color, max| {
                     if (std.mem.eql(u8, k, color)) {
                         isValid = isValid and ((int(v) catch 0) <= (int(max) catch 99));
                     }
                 }
-                // std.debug.print("-|{}|\n", .{isValid});
             }
         }
     }
 
-    // std.debug.print("[{d}]\n", .{game_id});
     if (isValid) return game_id else return 0;
 }
 
@@ -79,7 +75,6 @@ pub fn part2(line: []u8) u32 {
     while (it.next()) |token| {
         var jt = std.mem.tokenizeAny(u8, token, " ,");
         var temp: u8 = 1;
-        // std.debug.print("\t-|{s}\n", .{token});
         while (jt.next()) |v| {
             if (jt.next()) |k| {
                 if (std.mem.eql(u8, k, "blue")) {
@@ -92,12 +87,9 @@ pub fn part2(line: []u8) u32 {
                     temp = int(v) catch 99;
                     if (temp > max_green) max_green = temp;
                 }
-                // std.debug.print("\t-[b:{d},g:{d},r:{d},\n", .{ max_blue, max_green, max_red });
             }
         }
     }
-
-    // std.debug.print("power {}\n", .{max_green * max_blue * max_red});
     return max_green * max_blue * max_red;
 }
 
@@ -117,18 +109,9 @@ pub fn main() !void {
     result1 = 0;
     result2 = 0;
 
-    // var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
-    // defer arena.deinit();
-    // const allocator = arena.allocator();
-    // var game_id = 1;
-
     while (try in_stream.readUntilDelimiterOrEof(&buf, '\n')) |line| {
         result1 += isPossibleGame(line);
         result2 += part2(line);
-
-        //if game is possible;
-        // result1 += game_id;
-        // game_id += 1;
     }
 
     print("-- Day 2: Cube Conundrum?! --\n\n", .{});
